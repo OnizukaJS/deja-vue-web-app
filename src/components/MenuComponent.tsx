@@ -2,6 +2,7 @@ import React, { ReactElement, useState } from "react";
 import { Box, Button, Menu, MenuItem } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import MenuItemModel from "../models/MenuItemModel";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -20,6 +21,7 @@ export interface MenuProps {
 
 const MenuComponent = ({ menuTitle, menuItems }: MenuProps) => {
   const classes = useStyles();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -27,6 +29,11 @@ const MenuComponent = ({ menuTitle, menuItems }: MenuProps) => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleClickMenu = (navigateTo: string) => {
+    navigate(navigateTo);
+    handleClose();
   };
 
   return (
@@ -52,7 +59,7 @@ const MenuComponent = ({ menuTitle, menuItems }: MenuProps) => {
         disableScrollLock
       >
         {menuItems.map((item) => (
-          <MenuItem onClick={item.navigateTo}>
+          <MenuItem onClick={() => handleClickMenu(item.navigateTo)}>
             {item.icon}
             {item.subMenuTitle}
           </MenuItem>

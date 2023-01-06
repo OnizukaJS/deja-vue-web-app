@@ -1,7 +1,7 @@
 interface MenuItemModel {
   icon: JSX.Element;
   subMenuTitle: string;
-  navigateTo: () => void;
+  navigateTo: string;
 }
 
 export default MenuItemModel;

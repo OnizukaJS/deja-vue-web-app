@@ -26,12 +26,12 @@ const HeaderMenus = () => {
     {
       icon: <TrendingUpIcon />,
       subMenuTitle: "Popular",
-      navigateTo: () => navigate(routes.popularMovies),
+      navigateTo: routes.popularMovies,
     },
     {
       icon: <StarIcon />,
       subMenuTitle: "Top rated",
-      navigateTo: () => navigate(routes.topRatedMovies),
+      navigateTo: routes.topRatedMovies,
     },
   ];
 
@@ -39,12 +39,12 @@ const HeaderMenus = () => {
     {
       icon: <TrendingUpIcon />,
       subMenuTitle: "Popular",
-      navigateTo: () => navigate(routes.popularSeries),
+      navigateTo: routes.popularSeries,
     },
     {
       icon: <StarIcon />,
       subMenuTitle: "Top rated",
-      navigateTo: () => navigate(routes.topRatedSeries),
+      navigateTo: routes.topRatedSeries,
     },
   ];
 
