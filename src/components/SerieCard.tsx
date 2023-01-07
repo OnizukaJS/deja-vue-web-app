@@ -18,7 +18,7 @@ import RateBadge from "./RateBadge";
 const useStyles = makeStyles(() =>
   createStyles({
     containerCard: {
-      width: 200,
+      minWidth: 200,
       margin: "1em 24px 1em 0",
 
       "&:hover": {
