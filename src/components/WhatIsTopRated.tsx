@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import { Box, Tab, Tabs } from "@mui/material";
-import useFetchPopularMovies from "../hooks/useFetchPopularMovies";
-import useFetchPopularSeries from "../hooks/useFetchPopularSeries";
+import useFetchTopRatedMovies from "../hooks/useFetchTopRatedMovies";
+import useFetchTopRatedSeries from "../hooks/useFetchTopRatedSeries";
 import { createStyles, makeStyles } from "@mui/styles";
 import MovieCard from "./MovieCard";
 import SerieCard from "./SerieCard";
@@ -46,11 +46,11 @@ function a11yProps(index: number) {
   };
 }
 
-const WhatIsPopular = () => {
+const WhatIsTopRated = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  const { popularMovies, isPopularMoviesLoading } = useFetchPopularMovies();
-  const { popularSeries, isPopularSeriesLoading } = useFetchPopularSeries();
+  const { topRatedMovies, isTopRatedMoviesLoading } = useFetchTopRatedMovies();
+  const { topRatedSeries, isTopRatedSeriesLoading } = useFetchTopRatedSeries();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -65,24 +65,24 @@ const WhatIsPopular = () => {
           aria-label="basic tabs example"
         >
           <Tab
-            label="Popular movies"
+            label="Top rated movies"
             {...a11yProps(0)}
             className={classes.tab}
           />
           <Tab
-            label="Popular series"
+            label="Top rated series"
             {...a11yProps(1)}
             className={classes.tab}
           />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {popularMovies?.results.map((movie, key) => (
+        {topRatedMovies?.results.map((movie, key) => (
           <MovieCard movie={movie} key={key} />
         ))}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {popularSeries?.results.map((serie, key) => (
+        {topRatedSeries?.results.map((serie, key) => (
           <SerieCard serie={serie} key={key} />
         ))}
       </TabPanel>
@@ -90,4 +90,4 @@ const WhatIsPopular = () => {
   );
 };
 
-export default WhatIsPopular;
+export default WhatIsTopRated;
