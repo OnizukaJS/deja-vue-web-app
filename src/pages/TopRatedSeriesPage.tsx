@@ -8,10 +8,10 @@ const TopRatedSeriesPage = () => {
   return (
     <Box sx={{ padding: 3 }}>
       {isLoading ? (
-        <Typography variant="h4">Loading...</Typography>
+        <Typography variant="h3">Loading...</Typography>
       ) : (
         <Box>
-          <h1>Top rated series</h1>
+          <Typography variant="h3">Top rated series</Typography>
           <Box
             sx={{
               display: "flex",

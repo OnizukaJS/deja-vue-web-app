@@ -9,10 +9,10 @@ const TopRatedMoviesPage = () => {
   return (
     <Box sx={{ padding: 3 }}>
       {isLoading ? (
-        <Typography variant="h4">Loading...</Typography>
+        <Typography variant="h3">Loading...</Typography>
       ) : (
         <Box>
-          <h1>Top rated movies</h1>
+          <Typography variant="h3">Top rated movies</Typography>
           <Box
             sx={{
               display: "flex",
