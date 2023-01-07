@@ -58,8 +58,8 @@ const MenuComponent = ({ menuTitle, menuItems }: MenuProps) => {
         }}
         disableScrollLock
       >
-        {menuItems.map((item) => (
-          <MenuItem onClick={() => handleClickMenu(item.navigateTo)}>
+        {menuItems.map((item, key) => (
+          <MenuItem key={key} onClick={() => handleClickMenu(item.navigateTo)}>
             {item.icon}
             {item.subMenuTitle}
           </MenuItem>
