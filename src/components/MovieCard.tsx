@@ -18,8 +18,8 @@ import RateBadge from "./RateBadge";
 const useStyles = makeStyles(() =>
   createStyles({
     containerCard: {
-      width: 200,
-      minWidth: 200,
+      width: 150,
+      minWidth: 150,
       margin: "1em 24px 1em 0",
 
       "&:hover": {
@@ -28,7 +28,7 @@ const useStyles = makeStyles(() =>
     },
     image: {
       borderRadius: 4,
-      minHeight: 300,
+      minHeight: 200,
     },
   })
 );
@@ -48,7 +48,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
         sx={{ height: "100%" }}
       >
         <Box sx={{ height: "100%" }}>
-          <Box sx={{ minHeight: 300 }}>
+          <Box sx={{ minHeight: 200 }}>
             <CardMedia
               component="img"
               image={`https://www.themoviedb.org/t/p/original${movie.poster_path}`}
@@ -66,9 +66,9 @@ const MovieCard = ({ movie }: MovieCardProps) => {
             </IconButton>
           </CardActions>
           <CardContent>
-            <Typography>
+            <span>
               <b>{movie.title}</b>
-            </Typography>
+            </span>
           </CardContent>
         </Box>
       </CardActionArea>
