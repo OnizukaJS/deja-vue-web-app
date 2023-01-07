@@ -2,16 +2,17 @@ import { useEffect, useState } from "react";
 import SeriesModel from "../models/SeriesModel";
 
 const useFetchTopRatedSeries = (): {
-  isLoading: boolean;
+  isTopRatedSeriesLoading: boolean;
   topRatedSeries: SeriesModel | undefined;
 } => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isTopRatedSeriesLoading, setIsTopRatedSeriesLoading] =
+    useState<boolean>(false);
   const [topRatedSeries, setTopRatedSeries] = useState<
     SeriesModel | undefined
   >();
 
   useEffect(() => {
-    setIsLoading(true);
+    setIsTopRatedSeriesLoading(true);
 
     fetch(
       `https://api.themoviedb.org/3/tv/top_rated?api_key=${
@@ -27,10 +28,10 @@ const useFetchTopRatedSeries = (): {
     )
       .then((response) => response.json())
       .then((series) => setTopRatedSeries(series as SeriesModel))
-      .then(() => setIsLoading(false));
+      .then(() => setIsTopRatedSeriesLoading(false));
   }, []);
 
-  return { isLoading, topRatedSeries };
+  return { isTopRatedSeriesLoading, topRatedSeries };
 };
 
 export default useFetchTopRatedSeries;

@@ -4,10 +4,10 @@ import useFetchPopularMovies from "../hooks/useFetchPopularMovies";
 import MovieCard from "../components/MovieCard";
 
 const PopularMoviesPage = () => {
-  const { popularMovies, isLoading } = useFetchPopularMovies();
+  const { popularMovies, isPopularMoviesLoading } = useFetchPopularMovies();
   return (
     <Box sx={{ padding: 3 }}>
-      {isLoading ? (
+      {isPopularMoviesLoading ? (
         <Typography variant="h3">Loading...</Typography>
       ) : (
         <Box>

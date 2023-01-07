@@ -4,11 +4,11 @@ import useFetchPopularSeries from "../hooks/useFetchPopularSeries";
 import SerieCard from "../components/SerieCard";
 
 const PopularSeriesPage = () => {
-  const { popularSeries, isLoading } = useFetchPopularSeries();
+  const { popularSeries, isPopularSeriesLoading } = useFetchPopularSeries();
 
   return (
     <Box sx={{ padding: 3 }}>
-      {isLoading ? (
+      {isPopularSeriesLoading ? (
         <Typography variant="h3">Loading...</Typography>
       ) : (
         <Box>

@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import MoviesModel from "../models/MoviesModel";
 
 const useFetchPopularMovies = (): {
-  isLoading: boolean;
+  isPopularMoviesLoading: boolean;
   popularMovies: MoviesModel | undefined;
 } => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isPopularMoviesLoading, setIsPopularMoviesLoading] =
+    useState<boolean>(false);
   const [popularMovies, setPopularMovies] = useState<MoviesModel | undefined>();
 
   useEffect(() => {
-    setIsLoading(true);
+    setIsPopularMoviesLoading(true);
 
     fetch(
       `https://api.themoviedb.org/3/movie/popular?api_key=${
@@ -25,10 +26,10 @@ const useFetchPopularMovies = (): {
     )
       .then((response) => response.json())
       .then((movies) => setPopularMovies(movies as MoviesModel))
-      .then(() => setIsLoading(false));
+      .then(() => setIsPopularMoviesLoading(false));
   }, []);
 
-  return { isLoading, popularMovies };
+  return { isPopularMoviesLoading, popularMovies };
 };
 
 export default useFetchPopularMovies;

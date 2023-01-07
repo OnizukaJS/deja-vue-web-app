@@ -4,10 +4,10 @@ import useFetchTopRatedSeries from "../hooks/useFetchTopRatedSeries";
 import SerieCard from "../components/SerieCard";
 
 const TopRatedSeriesPage = () => {
-  const { topRatedSeries, isLoading } = useFetchTopRatedSeries();
+  const { topRatedSeries, isTopRatedSeriesLoading } = useFetchTopRatedSeries();
   return (
     <Box sx={{ padding: 3 }}>
-      {isLoading ? (
+      {isTopRatedSeriesLoading ? (
         <Typography variant="h3">Loading...</Typography>
       ) : (
         <Box>

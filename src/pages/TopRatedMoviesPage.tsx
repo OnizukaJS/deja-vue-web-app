@@ -4,11 +4,11 @@ import useFetchTopRatedMovies from "../hooks/useFetchTopRatedMovies";
 import MovieCard from "../components/MovieCard";
 
 const TopRatedMoviesPage = () => {
-  const { topRatedMovies, isLoading } = useFetchTopRatedMovies();
+  const { topRatedMovies, isTopRatedMoviesLoading } = useFetchTopRatedMovies();
 
   return (
     <Box sx={{ padding: 3 }}>
-      {isLoading ? (
+      {isTopRatedMoviesLoading ? (
         <Typography variant="h3">Loading...</Typography>
       ) : (
         <Box>
