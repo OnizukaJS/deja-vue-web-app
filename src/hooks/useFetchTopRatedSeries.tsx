@@ -12,23 +12,31 @@ const useFetchTopRatedSeries = (): {
   >();
 
   useEffect(() => {
-    setIsTopRatedSeriesLoading(true);
+    async function fetchTopRatedSeries() {
+      try {
+        setIsTopRatedSeriesLoading(true);
 
-    fetch(
-      `https://api.themoviedb.org/3/tv/top_rated?api_key=${
-        import.meta.env.VITE_TMDB_API_KEY
-      }&language=en-US&page=1`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${import.meta.env.TMDB_ACCESS_TOKEN}`,
-        },
+        await fetch(
+          `https://api.themoviedb.org/3/tv/top_rated?api_key=${
+            import.meta.env.VITE_TMDB_API_KEY
+          }&language=en-US&page=1`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${import.meta.env.TMDB_ACCESS_TOKEN}`,
+            },
+          }
+        )
+          .then((response) => response.json())
+          .then((series) => setTopRatedSeries(series as SeriesModel))
+          .then(() => setIsTopRatedSeriesLoading(false));
+      } catch (error) {
+        setIsTopRatedSeriesLoading(false);
       }
-    )
-      .then((response) => response.json())
-      .then((series) => setTopRatedSeries(series as SeriesModel))
-      .then(() => setIsTopRatedSeriesLoading(false));
+    }
+
+    fetchTopRatedSeries();
   }, []);
 
   return { isTopRatedSeriesLoading, topRatedSeries };
