@@ -64,6 +64,20 @@ const RateBadge = ({ rate }: RateBadgeProps) => {
   const classes = useStyles();
   const percentage = rate * 10;
 
+  let color = "";
+
+  const defineColor = (percentage: number) => {
+    if (percentage < 70 && percentage >= 40) {
+      color = "yellow";
+    } else if (percentage < 40) {
+      color = "red";
+    } else {
+      color = "#1976d2";
+    }
+
+    return color;
+  };
+
   return (
     <Box className={classes.containerRate}>
       <Box className={classes.outerRing}>
@@ -74,6 +88,7 @@ const RateBadge = ({ rate }: RateBadgeProps) => {
               variant="determinate"
               value={percentage}
               className={classes.circularProgress}
+              style={{ color: defineColor(percentage) }}
             />
           </Box>
         </Box>
