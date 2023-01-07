@@ -8,7 +8,7 @@ const MovieDetailsPage = () => {
   const { movie, isLoading } = useFetchMovieDetails(movieId!);
 
   return (
-    <>
+    <Box sx={{ padding: 3 }}>
       {isLoading ? (
         <Box>
           <Typography variant="h4">Loading...</Typography>
@@ -18,7 +18,7 @@ const MovieDetailsPage = () => {
           <Typography>{movie?.title}</Typography>
         </Box>
       )}
-    </>
+    </Box>
   );
 };
 

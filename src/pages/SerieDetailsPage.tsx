@@ -8,7 +8,7 @@ const SerieDetailsPage = () => {
   const { serie, isLoading } = useFetchSerieDetails(serieId!);
 
   return (
-    <>
+    <Box sx={{ padding: 3 }}>
       {isLoading ? (
         <Box>
           <Typography variant="h4">Loading...</Typography>
@@ -18,7 +18,7 @@ const SerieDetailsPage = () => {
           <Typography>{serie?.name}</Typography>
         </Box>
       )}
-    </>
+    </Box>
   );
 };
 
