@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from "react";
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs, Typography } from "@mui/material";
 import useFetchPopularMovies from "../hooks/useFetchPopularMovies";
 import useFetchPopularSeries from "../hooks/useFetchPopularSeries";
 import { createStyles, makeStyles } from "@mui/styles";
@@ -77,14 +77,26 @@ const WhatIsPopular = () => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {popularMovies?.results.map((movie, key) => (
-          <MovieCard movie={movie} key={key} />
-        ))}
+        {isPopularMoviesLoading ? (
+          <Typography variant="h4" sx={{ margin: "12px 0" }}>
+            Loading...
+          </Typography>
+        ) : (
+          popularMovies?.results.map((movie, key) => (
+            <MovieCard movie={movie} key={key} />
+          ))
+        )}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {popularSeries?.results.map((serie, key) => (
-          <SerieCard serie={serie} key={key} />
-        ))}
+        {isPopularSeriesLoading ? (
+          <Typography variant="h4" sx={{ margin: "12px 0" }}>
+            Loading...
+          </Typography>
+        ) : (
+          popularSeries?.results.map((serie, key) => (
+            <SerieCard serie={serie} key={key} />
+          ))
+        )}
       </TabPanel>
     </Box>
   );

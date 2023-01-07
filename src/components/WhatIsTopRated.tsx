@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from "react";
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs, Typography } from "@mui/material";
 import useFetchTopRatedMovies from "../hooks/useFetchTopRatedMovies";
 import useFetchTopRatedSeries from "../hooks/useFetchTopRatedSeries";
 import { createStyles, makeStyles } from "@mui/styles";
@@ -77,14 +77,26 @@ const WhatIsTopRated = () => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {topRatedMovies?.results.map((movie, key) => (
-          <MovieCard movie={movie} key={key} />
-        ))}
+        {isTopRatedMoviesLoading ? (
+          <Typography variant="h4" sx={{ margin: "12px 0" }}>
+            Loading...
+          </Typography>
+        ) : (
+          topRatedMovies?.results.map((movie, key) => (
+            <MovieCard movie={movie} key={key} />
+          ))
+        )}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {topRatedSeries?.results.map((serie, key) => (
-          <SerieCard serie={serie} key={key} />
-        ))}
+        {isTopRatedSeriesLoading ? (
+          <Typography variant="h4" sx={{ margin: "12px 0" }}>
+            Loading...
+          </Typography>
+        ) : (
+          topRatedSeries?.results.map((serie, key) => (
+            <SerieCard serie={serie} key={key} />
+          ))
+        )}
       </TabPanel>
     </Box>
   );
