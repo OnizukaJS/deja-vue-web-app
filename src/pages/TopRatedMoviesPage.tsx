@@ -7,7 +7,7 @@ const TopRatedMoviesPage = () => {
   const { topRatedMovies, isLoading } = useFetchTopRatedMovies();
 
   return (
-    <>
+    <Box sx={{ padding: 3 }}>
       {isLoading ? (
         <Typography variant="h4">Loading...</Typography>
       ) : (
@@ -17,7 +17,6 @@ const TopRatedMoviesPage = () => {
             sx={{
               display: "flex",
               flexWrap: "wrap",
-              justifyContent: "space-between",
             }}
           >
             {topRatedMovies?.results.map((movie, key) => (
@@ -26,7 +25,7 @@ const TopRatedMoviesPage = () => {
           </Box>
         </Box>
       )}
-    </>
+    </Box>
   );
 };
 

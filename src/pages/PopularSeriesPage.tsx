@@ -7,7 +7,7 @@ const PopularSeriesPage = () => {
   const { popularSeries, isLoading } = useFetchPopularSeries();
 
   return (
-    <>
+    <Box sx={{ padding: 3 }}>
       {isLoading ? (
         <Typography variant="h4">Loading...</Typography>
       ) : (
@@ -17,7 +17,6 @@ const PopularSeriesPage = () => {
             sx={{
               display: "flex",
               flexWrap: "wrap",
-              justifyContent: "space-between",
             }}
           >
             {popularSeries?.results.map((serie, key) => (
@@ -26,7 +25,7 @@ const PopularSeriesPage = () => {
           </Box>
         </Box>
       )}
-    </>
+    </Box>
   );
 };
 

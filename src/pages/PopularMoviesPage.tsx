@@ -6,7 +6,7 @@ import MovieCard from "../components/MovieCard";
 const PopularMoviesPage = () => {
   const { popularMovies, isLoading } = useFetchPopularMovies();
   return (
-    <>
+    <Box sx={{ padding: 3 }}>
       {isLoading ? (
         <Typography variant="h4">Loading...</Typography>
       ) : (
@@ -16,7 +16,6 @@ const PopularMoviesPage = () => {
             sx={{
               display: "flex",
               flexWrap: "wrap",
-              justifyContent: "space-between",
             }}
           >
             {popularMovies?.results.map((movie, key) => (
@@ -25,7 +24,7 @@ const PopularMoviesPage = () => {
           </Box>
         </Box>
       )}
-    </>
+    </Box>
   );
 };
 

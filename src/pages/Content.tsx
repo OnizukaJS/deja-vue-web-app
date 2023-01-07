@@ -11,7 +11,7 @@ import TopRatedSeriesPage from "./TopRatedSeriesPage";
 
 const Content = () => {
   return (
-    <main style={{ marginTop: 100, padding: 24 }}>
+    <main style={{ marginTop: 100 }}>
       <Routes>
         <Route path={routes.homePage} element={<HomePage />} />
         <Route

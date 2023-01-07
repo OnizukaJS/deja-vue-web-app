@@ -33,7 +33,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
   const navigate = useNavigate();
 
   return (
-    <Card sx={{ width: 200, marginBottom: "1em" }}>
+    <Card sx={{ width: 200, margin: "1em 24px 1em 0" }}>
       <CardActionArea
         onClick={() => navigate(routes.movieDetails(movie.id.toString()))}
         sx={{ height: "100%" }}

@@ -17,6 +17,14 @@ import RateBadge from "./RateBadge";
 
 const useStyles = makeStyles(() =>
   createStyles({
+    containerCard: {
+      width: 200,
+      margin: "1em 24px 1em 0",
+
+      "&:hover": {
+        transform: "scale(1.03)",
+      },
+    },
     image: {
       borderRadius: 4,
       minHeight: 300,
@@ -33,7 +41,7 @@ const SerieCard = ({ serie }: SerieCardProps) => {
   const navigate = useNavigate();
 
   return (
-    <Card sx={{ width: 200, marginBottom: "1em" }}>
+    <Card className={classes.containerCard}>
       <CardActionArea
         onClick={() => navigate(routes.serieDetails(serie.id.toString()))}
         sx={{ height: "100%" }}

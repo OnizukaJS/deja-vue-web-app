@@ -6,7 +6,7 @@ import SerieCard from "../components/SerieCard";
 const TopRatedSeriesPage = () => {
   const { topRatedSeries, isLoading } = useFetchTopRatedSeries();
   return (
-    <>
+    <Box sx={{ padding: 3 }}>
       {isLoading ? (
         <Typography variant="h4">Loading...</Typography>
       ) : (
@@ -16,7 +16,6 @@ const TopRatedSeriesPage = () => {
             sx={{
               display: "flex",
               flexWrap: "wrap",
-              justifyContent: "space-between",
             }}
           >
             {topRatedSeries?.results.map((serie, key) => (
@@ -25,7 +24,7 @@ const TopRatedSeriesPage = () => {
           </Box>
         </Box>
       )}
-    </>
+    </Box>
   );
 };
 
