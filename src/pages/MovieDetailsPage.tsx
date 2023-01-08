@@ -2,20 +2,91 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useParams } from "react-router-dom";
 import useFetchMovieDetails from "../hooks/useFetchMovieDetails";
+import { createStyles, makeStyles } from "@mui/styles";
+import RateBadge from "../components/RateBadge";
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    backgroundImage: {
+      backgroundSize: "cover",
+      height: "40em",
+      filter: "brightness(0.3)",
+    },
+    containerInformation: {
+      display: "flex",
+      position: "absolute",
+      top: "185px",
+      left: "50px",
+    },
+    containerMovieDetails: {},
+    image: {
+      height: 500,
+      borderRadius: "8px",
+    },
+    information: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      color: "#fff",
+      marginLeft: 24,
+    },
+  })
+);
+
+const toHoursAndMinutes = (totalMinutes: number | undefined) => {
+  if (totalMinutes) {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes & 60;
+
+    return `${hours}h${minutes}`;
+  }
+};
 
 const MovieDetailsPage = () => {
+  const classes = useStyles();
   const { movieId } = useParams();
   const { movie, isLoading } = useFetchMovieDetails(movieId!);
 
   return (
-    <Box sx={{ padding: 3 }}>
+    <Box className={classes.containerMovieDetails}>
       {isLoading ? (
-        <Box>
+        <Box sx={{ padding: 3 }}>
           <Typography variant="h4">Loading...</Typography>
         </Box>
       ) : (
         <Box>
-          <Typography>{movie?.title}</Typography>
+          <Box
+            style={{
+              backgroundImage: `url("https://www.themoviedb.org/t/p/original${movie?.backdrop_path}")`,
+            }}
+            className={classes.backgroundImage}
+          />
+
+          <Box className={classes.containerInformation}>
+            <img
+              src={`https://www.themoviedb.org/t/p/original${movie?.poster_path}`}
+              className={classes.image}
+            />
+
+            <Box className={classes.information}>
+              <Typography variant="h4">{movie?.title}</Typography>
+
+              <Typography>
+                {movie?.release_date} |{" "}
+                {movie?.genres.map((genre) => `${genre.name}, `)} |{" "}
+                {toHoursAndMinutes(movie?.runtime)}
+              </Typography>
+
+              <RateBadge rate={Number(movie?.vote_average?.toFixed(1))} />
+
+              <Typography variant="caption" sx={{ fontStyle: "italic" }}>
+                {movie?.tagline}
+              </Typography>
+
+              <Typography variant="h6">Overview</Typography>
+              <Typography>{movie?.overview}</Typography>
+            </Box>
+          </Box>
         </Box>
       )}
     </Box>

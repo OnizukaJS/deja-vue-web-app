@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import MoviesModel from "../models/MoviesModel";
+import MoviesListModel from "../models/MoviesListModel";
 
 const useFetchTopRatedMovies = (): {
   isTopRatedMoviesLoading: boolean;
-  topRatedMovies: MoviesModel | undefined;
+  topRatedMovies: MoviesListModel | undefined;
 } => {
   const [isTopRatedMoviesLoading, setIsTopRatedMoviesLoading] =
     useState<boolean>(false);
   const [topRatedMovies, setTopRatedMovies] = useState<
-    MoviesModel | undefined
+    MoviesListModel | undefined
   >();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const useFetchTopRatedMovies = (): {
           }
         )
           .then((response) => response.json())
-          .then((movies) => setTopRatedMovies(movies as MoviesModel))
+          .then((movies) => setTopRatedMovies(movies as MoviesListModel))
           .then(() => setIsTopRatedMoviesLoading(false));
       } catch (error) {
         setIsTopRatedMoviesLoading(false);

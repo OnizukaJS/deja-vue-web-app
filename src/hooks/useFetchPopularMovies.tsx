@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import MoviesModel from "../models/MoviesModel";
+import MoviesListModel from "../models/MoviesListModel";
 
 const useFetchPopularMovies = (): {
   isPopularMoviesLoading: boolean;
-  popularMovies: MoviesModel | undefined;
+  popularMovies: MoviesListModel | undefined;
 } => {
   const [isPopularMoviesLoading, setIsPopularMoviesLoading] =
     useState<boolean>(false);
-  const [popularMovies, setPopularMovies] = useState<MoviesModel | undefined>();
+  const [popularMovies, setPopularMovies] = useState<
+    MoviesListModel | undefined
+  >();
 
   useEffect(() => {
     async function fetchPopularMovies() {
@@ -27,7 +29,7 @@ const useFetchPopularMovies = (): {
           }
         )
           .then((response) => response.json())
-          .then((movies) => setPopularMovies(movies as MoviesModel))
+          .then((movies) => setPopularMovies(movies as MoviesListModel))
           .then(() => setIsPopularMoviesLoading(false));
       } catch (error) {
         setIsPopularMoviesLoading(false);
