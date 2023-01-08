@@ -17,11 +17,9 @@ const useStyles = makeStyles(() =>
       },
     },
     containerRate: {
-      position: "absolute",
       left: 10,
       width: 38,
       height: 38,
-      boxSizing: "border-box",
     },
     icon: {
       color: "#fff",

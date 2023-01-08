@@ -7,7 +7,7 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import MovieModel from "../models/MovieModel";
+import MovieListModel from "../models/MovieListModel";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +34,7 @@ const useStyles = makeStyles(() =>
 );
 
 interface MovieCardProps {
-  movie: MovieModel;
+  movie: MovieListModel;
 }
 
 const MovieCard = ({ movie }: MovieCardProps) => {
@@ -56,7 +56,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
               className={classes.image}
             />
           </Box>
-          <CardActions disableSpacing sx={{ justifyContent: "end" }}>
+          <CardActions disableSpacing sx={{ justifyContent: "space-between" }}>
             <RateBadge rate={movie.vote_average} />
             <IconButton aria-label="add to favorites">
               <FavoriteIcon />
