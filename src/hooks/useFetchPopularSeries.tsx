@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import SeriesModel from "../models/SeriesModel";
+import SeriesListModel from "../models/SeriesListModel";
 
 const useFetchPopularSeries = (): {
   isPopularSeriesLoading: boolean;
-  popularSeries: SeriesModel | undefined;
+  popularSeries: SeriesListModel | undefined;
 } => {
   const [isPopularSeriesLoading, setIsPopularSeriesLoading] =
     useState<boolean>(false);
-  const [popularSeries, setPopularSeries] = useState<SeriesModel | undefined>();
+  const [popularSeries, setPopularSeries] = useState<
+    SeriesListModel | undefined
+  >();
 
   useEffect(() => {
     async function fetchPopularSeries() {
@@ -27,7 +29,7 @@ const useFetchPopularSeries = (): {
           }
         )
           .then((response) => response.json())
-          .then((series) => setPopularSeries(series as SeriesModel))
+          .then((series) => setPopularSeries(series as SeriesListModel))
           .then(() => setIsPopularSeriesLoading(false));
       } catch (error) {
         setIsPopularSeriesLoading(false);

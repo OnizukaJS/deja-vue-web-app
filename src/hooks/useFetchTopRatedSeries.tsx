@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import SeriesModel from "../models/SeriesModel";
+import SeriesListModel from "../models/SeriesListModel";
 
 const useFetchTopRatedSeries = (): {
   isTopRatedSeriesLoading: boolean;
-  topRatedSeries: SeriesModel | undefined;
+  topRatedSeries: SeriesListModel | undefined;
 } => {
   const [isTopRatedSeriesLoading, setIsTopRatedSeriesLoading] =
     useState<boolean>(false);
   const [topRatedSeries, setTopRatedSeries] = useState<
-    SeriesModel | undefined
+    SeriesListModel | undefined
   >();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const useFetchTopRatedSeries = (): {
           }
         )
           .then((response) => response.json())
-          .then((series) => setTopRatedSeries(series as SeriesModel))
+          .then((series) => setTopRatedSeries(series as SeriesListModel))
           .then(() => setIsTopRatedSeriesLoading(false));
       } catch (error) {
         setIsTopRatedSeriesLoading(false);

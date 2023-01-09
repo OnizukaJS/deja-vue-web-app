@@ -1,10 +1,8 @@
+import BaseModel from "./BaseModel";
 import MovieModel from "./MovieListModel";
 
-interface MoviesListModel {
-  page: number;
+interface MoviesListModel extends BaseModel {
   results: MovieModel[];
-  total_pages: number;
-  total_results: number;
 }
 
 export default MoviesListModel;
