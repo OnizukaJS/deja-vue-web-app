@@ -4,10 +4,11 @@ import MovieRecommandationsModel from "../models/MovieRecommandationsModel";
 const useFetchMovieRecommandations = (
   movieId: string
 ): {
-  isLoading: boolean;
+  areRecommandationsLoading: boolean;
   recommandations: MovieRecommandationsModel | undefined;
 } => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [areRecommandationsLoading, setAreRecommandationsLoading] =
+    useState<boolean>(false);
   const [recommandations, setRecommandations] = useState<
     MovieRecommandationsModel | undefined
   >();
@@ -15,6 +16,8 @@ const useFetchMovieRecommandations = (
   useEffect(() => {
     async function fetchMovieRecommandation() {
       try {
+        setAreRecommandationsLoading(true);
+
         await fetch(
           `https://api.themoviedb.org/3/movie/${movieId}/recommendations?api_key=${
             import.meta.env.VITE_TMDB_API_KEY
@@ -30,16 +33,17 @@ const useFetchMovieRecommandations = (
           .then((response) => response.json())
           .then((recommandations) =>
             setRecommandations(recommandations as MovieRecommandationsModel)
-          );
+          )
+          .then(() => setAreRecommandationsLoading(false));
       } catch (error) {
         console.log(error);
       }
     }
 
     fetchMovieRecommandation();
-  }, []);
+  }, [movieId]);
 
-  return { isLoading, recommandations };
+  return { areRecommandationsLoading, recommandations };
 };
 
 export default useFetchMovieRecommandations;
