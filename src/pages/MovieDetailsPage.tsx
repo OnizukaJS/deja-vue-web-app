@@ -124,10 +124,11 @@ const MovieDetailsPage = () => {
           <Box className={classes.containerPadding}>
             <Typography variant="h4">Reviews</Typography>
             <Box className={classes.subContainer}>
-              <ReviewCard review={reviews?.results[0]!} />
-              {/* {reviews?.reviews.map((review) => (
-                <ReviewCard review={review} />
-              ))} */}
+              {reviews?.results?.length !== 0 ? (
+                <ReviewCard review={reviews?.results[0]!} />
+              ) : (
+                <Typography>There is no review for this movie yet.</Typography>
+              )}
             </Box>
           </Box>
 
