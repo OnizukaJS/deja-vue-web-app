@@ -39,18 +39,21 @@ const Recommandations = ({ movie }: RecommandationsProps) => {
     <Card className={classes.containerRecommandation}>
       <CardActionArea
         onClick={() => navigate(routes.movieDetails(movie.id.toString()))}
+        sx={{ height: "100%" }}
       >
-        <CardMedia
-          component="img"
-          image={`https://www.themoviedb.org/t/p/original${movie.backdrop_path}`}
-          alt={movie.title}
-          className={classes.image}
-        />
-        <CardContent>
-          <Typography>{movie.title}</Typography>
-          <Typography>{movie.release_date}</Typography>
-          <RateBadge rate={Number(movie.vote_average.toFixed(1))} />
-        </CardContent>
+        <Box sx={{ height: "100%" }}>
+          <CardMedia
+            component="img"
+            image={`https://www.themoviedb.org/t/p/original${movie.backdrop_path}`}
+            alt={movie.title}
+            className={classes.image}
+          />
+          <CardContent>
+            <Typography>{movie.title}</Typography>
+            <Typography>{movie.release_date}</Typography>
+            <RateBadge rate={Number(movie.vote_average.toFixed(1))} />
+          </CardContent>
+        </Box>
       </CardActionArea>
     </Card>
   );
