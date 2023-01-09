@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import MovieModel from "../models/MovieModel";
+import MovieDetailsModel from "../models/MovieDetailsModel";
 
 const useFetchMovieDetails = (
   movieId: string
 ): {
   isLoading: boolean;
-  movie: MovieModel | undefined;
+  movie: MovieDetailsModel | undefined;
 } => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [movie, setMovie] = useState<MovieModel | undefined>();
+  const [movie, setMovie] = useState<MovieDetailsModel | undefined>();
 
   useEffect(() => {
     async function fetchMovieDetails() {
@@ -28,7 +28,7 @@ const useFetchMovieDetails = (
           }
         )
           .then((response) => response.json())
-          .then((movie) => setMovie(movie as MovieModel))
+          .then((movie) => setMovie(movie as MovieDetailsModel))
           .then(() => setIsLoading(false));
       } catch (error) {
         setIsLoading(false);
@@ -36,7 +36,7 @@ const useFetchMovieDetails = (
     }
 
     fetchMovieDetails();
-  }, []);
+  }, [movieId]);
 
   return { isLoading, movie };
 };

@@ -35,7 +35,7 @@ const useFetchSerieDetails = (
     }
 
     fetchSerieDetails();
-  }, []);
+  }, [serieId]);
 
   return { isLoading, serie };
 };
