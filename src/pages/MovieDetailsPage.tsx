@@ -6,6 +6,10 @@ import { createStyles, makeStyles } from "@mui/styles";
 import RateBadge from "../components/RateBadge";
 import Recommandations from "../components/Recommandations";
 import useFetchMovieRecommandations from "../hooks/useFetchMovieRecommandations";
+import useFetchMovieCredits from "../hooks/useFetchMovieCredits";
+import useFetchMovieReviews from "../hooks/useFetchMovieReviews";
+import CastCard from "../components/CastCard";
+import ReviewCard from "../components/ReviewCard";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -22,7 +26,7 @@ const useStyles = makeStyles(() =>
       left: "50px",
     },
     containerMovieDetails: {},
-    containerRecommandations: {
+    containerPadding: {
       padding: 24,
     },
     image: {
@@ -36,7 +40,7 @@ const useStyles = makeStyles(() =>
       color: "#fff",
       marginLeft: 24,
     },
-    recommandations: {
+    subContainer: {
       display: "flex",
       overflowX: "auto",
       overflowY: "hidden",
@@ -57,9 +61,13 @@ const MovieDetailsPage = () => {
   const classes = useStyles();
   const { movieId } = useParams();
   const { movie, isLoading } = useFetchMovieDetails(movieId!);
-  const { recommandations } = useFetchMovieRecommandations(movieId!);
+  const { recommandations, areRecommandationsLoading } =
+    useFetchMovieRecommandations(movieId!);
+  const { credits, areCreditsLoading } = useFetchMovieCredits(movieId!);
+  const { reviews, areReviewsLoading } = useFetchMovieReviews(movieId!);
 
-  console.log(recommandations);
+  console.log(credits);
+  console.log(reviews);
 
   return (
     <Box className={classes.containerMovieDetails}>
@@ -103,9 +111,29 @@ const MovieDetailsPage = () => {
               </Box>
             </Box>
           </Box>
-          <Box className={classes.containerRecommandations}>
+
+          <Box className={classes.containerPadding}>
+            <Typography variant="h4">Top Billed Cast</Typography>
+            <Box className={classes.subContainer}>
+              {credits?.cast.map((actor) => (
+                <CastCard cast={actor} />
+              ))}
+            </Box>
+          </Box>
+
+          <Box className={classes.containerPadding}>
+            <Typography variant="h4">Reviews</Typography>
+            <Box className={classes.subContainer}>
+              <ReviewCard review={reviews?.results[0]!} />
+              {/* {reviews?.reviews.map((review) => (
+                <ReviewCard review={review} />
+              ))} */}
+            </Box>
+          </Box>
+
+          <Box className={classes.containerPadding}>
             <Typography variant="h4">Recommandations</Typography>
-            <Box className={classes.recommandations}>
+            <Box className={classes.subContainer}>
               {recommandations?.results.map((reco) => (
                 <Recommandations movie={reco} />
               ))}
