@@ -1,9 +1,11 @@
 import React from "react";
-import { Card, CardMedia, CardContent } from "@mui/material";
+import { Card, CardMedia, CardContent, CardActionArea } from "@mui/material";
 import CastModel from "../models/CastModel";
 import Typography from "@mui/material/Typography";
 import { createStyles, makeStyles } from "@mui/styles";
 import noProfilePicture from "../images/no-profile-picture.png";
+import { useNavigate } from "react-router-dom";
+import routes from "../constants/routes";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -20,28 +22,33 @@ const useStyles = makeStyles(() =>
 );
 
 interface CastCardProps {
-  cast?: CastModel;
+  cast: CastModel;
 }
 
 const CastCard = ({ cast }: CastCardProps) => {
   const classes = useStyles();
+  const navigate = useNavigate();
 
   return (
     <Card className={classes.containerCast}>
-      <CardMedia
-        component="img"
-        image={
-          cast?.profile_path !== null
-            ? `https://www.themoviedb.org/t/p/original${cast?.profile_path}`
-            : noProfilePicture
-        }
-        alt={cast?.name}
-        className={classes.image}
-      />
-      <CardContent>
-        <Typography sx={{ fontWeight: "bold" }}>{cast?.name}</Typography>
-        <Typography variant="caption">{cast?.character}</Typography>
-      </CardContent>
+      <CardActionArea
+        onClick={() => navigate(routes.castDetails(cast.id.toString()))}
+      >
+        <CardMedia
+          component="img"
+          image={
+            cast?.profile_path !== null
+              ? `https://www.themoviedb.org/t/p/original${cast?.profile_path}`
+              : noProfilePicture
+          }
+          alt={cast?.name}
+          className={classes.image}
+        />
+        <CardContent>
+          <Typography sx={{ fontWeight: "bold" }}>{cast?.name}</Typography>
+          <Typography variant="caption">{cast?.character}</Typography>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 };

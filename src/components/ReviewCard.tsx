@@ -9,6 +9,8 @@ const useStyles = makeStyles(() =>
   createStyles({
     containerReview: {
       display: "flex",
+      margin: 1,
+      padding: 16,
     },
     image: {
       height: 75,

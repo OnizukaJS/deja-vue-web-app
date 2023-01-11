@@ -2,8 +2,9 @@ import React from "react";
 import { useEffect, useState } from "react";
 import CreditsModel from "../models/CreditsModel";
 
-const useFetchMovieCredits = (
-  movieId: string
+const useFetchCreditsById = (
+  type: "movie" | "tv",
+  id: string
 ): {
   areCreditsLoading: boolean;
   credits: CreditsModel | undefined;
@@ -17,7 +18,7 @@ const useFetchMovieCredits = (
         setAreCreditsLoading(true);
 
         await fetch(
-          `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${
+          `https://api.themoviedb.org/3/${type}/${id}/credits?api_key=${
             import.meta.env.VITE_TMDB_API_KEY
           }&language=en-US`,
           {
@@ -37,9 +38,9 @@ const useFetchMovieCredits = (
     }
 
     fetchMovieCredits();
-  }, [movieId]);
+  }, [id]);
 
   return { areCreditsLoading, credits };
 };
 
-export default useFetchMovieCredits;
+export default useFetchCreditsById;

@@ -1,5 +1,5 @@
 import BaseModel from "./BaseModel";
-import SerieModel from "./SerieModel";
+import SerieModel from "./SerieListModel";
 
 interface SeriesListModel extends BaseModel {
   results: SerieModel[];

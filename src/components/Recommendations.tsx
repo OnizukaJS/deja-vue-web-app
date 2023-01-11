@@ -1,5 +1,5 @@
 import React from "react";
-import MovieRecommandationModel from "../models/MovieRecommandationModel";
+import MovieRecommendationModel from "../models/MovieRecommendationModel";
 import { createStyles, makeStyles } from "@mui/styles";
 import {
   Box,
@@ -15,7 +15,7 @@ import routes from "../constants/routes";
 
 const useStyles = makeStyles(() =>
   createStyles({
-    containerRecommandation: {
+    containerRecommendation: {
       minHeight: 141,
       minWidth: 250,
       margin: "6px",
@@ -27,16 +27,16 @@ const useStyles = makeStyles(() =>
   })
 );
 
-interface RecommandationsProps {
-  movie: MovieRecommandationModel;
+interface RecommendationsProps {
+  movie: MovieRecommendationModel;
 }
 
-const Recommandations = ({ movie }: RecommandationsProps) => {
+const Recommendations = ({ movie }: RecommendationsProps) => {
   const classes = useStyles();
   const navigate = useNavigate();
 
   return (
-    <Card className={classes.containerRecommandation}>
+    <Card className={classes.containerRecommendation}>
       <CardActionArea
         onClick={() => navigate(routes.movieDetails(movie.id.toString()))}
         sx={{ height: "100%" }}
@@ -59,4 +59,4 @@ const Recommandations = ({ movie }: RecommandationsProps) => {
   );
 };
 
-export default Recommandations;
+export default Recommendations;

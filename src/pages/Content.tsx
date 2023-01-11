@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import routes from "../constants/routes";
+import CastDetailsPage from "./CastDetailsPage";
 import HomePage from "./HomePage";
 import MovieDetailsPage from "./MovieDetailsPage";
 import PopularMoviesPage from "./PopularMoviesPage";
@@ -13,6 +14,10 @@ const Content = () => {
   return (
     <main style={{ marginTop: 100 }}>
       <Routes>
+        <Route
+          path={routes.castDetails(":castId")}
+          element={<CastDetailsPage />}
+        />
         <Route path={routes.homePage} element={<HomePage />} />
         <Route
           path={routes.movieDetails(":movieId")}

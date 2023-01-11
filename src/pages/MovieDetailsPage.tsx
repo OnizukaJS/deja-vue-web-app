@@ -1,15 +1,23 @@
-import { Box, Typography } from "@mui/material";
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { Box, Button, Modal, Typography } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 import useFetchMovieDetails from "../hooks/useFetchMovieDetails";
 import { createStyles, makeStyles } from "@mui/styles";
 import RateBadge from "../components/RateBadge";
-import Recommandations from "../components/Recommandations";
-import useFetchMovieRecommandations from "../hooks/useFetchMovieRecommandations";
-import useFetchMovieCredits from "../hooks/useFetchMovieCredits";
+import Recommendations from "../components/Recommendations";
+import useFetchMovieRecommendations from "../hooks/useFetchMovieRecommendations";
+import useFetchCreditsById from "../hooks/useFetchCreditsById";
 import useFetchMovieReviews from "../hooks/useFetchMovieReviews";
 import CastCard from "../components/CastCard";
 import ReviewCard from "../components/ReviewCard";
+import IconButton from "@mui/material/IconButton";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import StarRateIcon from "@mui/icons-material/StarRate";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import useFetchVideosByMovieOrSerieId from "../hooks/useFetchVideosByMovieOrSerieId";
+import CloseIcon from "@mui/icons-material/Close";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -17,6 +25,12 @@ const useStyles = makeStyles(() =>
       backgroundSize: "cover",
       height: "40em",
       filter: "brightness(0.3)",
+    },
+    button: {
+      background: "#0d253f!important",
+      color: "#fff!important",
+      marginLeft: 2,
+      marginRight: 2,
     },
     containerMainInfo: {},
     containerInformation: {
@@ -29,6 +43,11 @@ const useStyles = makeStyles(() =>
     containerPadding: {
       padding: 24,
     },
+    iframe: {
+      width: "100%",
+      height: "100%",
+      borderWidth: 0,
+    },
     image: {
       height: 500,
       borderRadius: "8px",
@@ -39,6 +58,15 @@ const useStyles = makeStyles(() =>
       justifyContent: "center",
       color: "#fff",
       marginLeft: 24,
+    },
+    modal: {
+      top: "45%!important",
+      left: "50%!important",
+      transform: "translate(-50%, -50%)",
+      width: "80%",
+      height: "88%",
+      border: "2px solid #000",
+      boxShadow: "24px",
     },
     subContainer: {
       display: "flex",
@@ -59,15 +87,20 @@ const toHoursAndMinutes = (totalMinutes: number | undefined) => {
 
 const MovieDetailsPage = () => {
   const classes = useStyles();
+  const navigate = useNavigate();
+  const [open, setOpen] = useState<boolean>(false);
   const { movieId } = useParams();
   const { movie, isLoading } = useFetchMovieDetails(movieId!);
-  const { recommandations, areRecommandationsLoading } =
-    useFetchMovieRecommandations(movieId!);
-  const { credits, areCreditsLoading } = useFetchMovieCredits(movieId!);
+  const { recommendations, areRecommendationsLoading } =
+    useFetchMovieRecommendations(movieId!);
+  const { credits, areCreditsLoading } = useFetchCreditsById("movie", movieId!);
   const { reviews, areReviewsLoading } = useFetchMovieReviews(movieId!);
+  const { videos } = useFetchVideosByMovieOrSerieId("movie", movieId!);
+  const trailer = videos?.results?.filter((video) => video.type === "Trailer");
+  const trailerId = trailer ? trailer[0].key : "";
 
-  console.log(credits);
-  console.log(reviews);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <Box className={classes.containerMovieDetails}>
@@ -100,7 +133,78 @@ const MovieDetailsPage = () => {
                   {toHoursAndMinutes(movie?.runtime)}
                 </Typography>
 
-                <RateBadge rate={Number(movie?.vote_average?.toFixed(1))} />
+                <Box sx={{ display: "flex" }}>
+                  <RateBadge rate={Number(movie?.vote_average?.toFixed(1))} />
+
+                  <Box sx={{ marginLeft: 1 }}>
+                    <IconButton
+                      aria-label="add-to-list"
+                      className={classes.button}
+                      sx={{ marginLeft: 1, marginRight: 1 }}
+                    >
+                      <FormatListBulletedIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      aria-label="add-to-favorites"
+                      className={classes.button}
+                      sx={{ marginLeft: 1, marginRight: 1 }}
+                    >
+                      <FavoriteIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      aria-label="add-to-watchlist"
+                      className={classes.button}
+                      sx={{ marginLeft: 1, marginRight: 1 }}
+                    >
+                      <BookmarkIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      aria-label="rate-it"
+                      className={classes.button}
+                      sx={{ marginLeft: 1, marginRight: 1 }}
+                    >
+                      <StarRateIcon fontSize="small" />
+                    </IconButton>
+
+                    <Button
+                      variant="text"
+                      startIcon={<PlayArrowIcon />}
+                      sx={{ color: "#fff", fontWeight: "bold" }}
+                      onClick={handleOpen}
+                    >
+                      Play Trailer
+                    </Button>
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      className={classes.modal}
+                    >
+                      <>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            background: "black",
+                            color: "#fff",
+                            padding: 2,
+                          }}
+                        >
+                          <Typography>Trailer {movie?.title}</Typography>
+                          <IconButton aria-label="close" onClick={handleClose}>
+                            <CloseIcon sx={{ color: "grey" }} />
+                          </IconButton>
+                        </Box>
+                        <iframe
+                          src={`https://www.youtube.com/embed/${trailerId}`}
+                          title={`${movie?.title}`}
+                          allowFullScreen
+                          className={classes.iframe}
+                        ></iframe>
+                      </>
+                    </Modal>
+                  </Box>
+                </Box>
 
                 <Typography variant="caption" sx={{ fontStyle: "italic" }}>
                   {movie?.tagline}
@@ -124,7 +228,9 @@ const MovieDetailsPage = () => {
           <Box className={classes.containerPadding}>
             <Typography variant="h4">Reviews</Typography>
             <Box className={classes.subContainer}>
-              {reviews?.results?.length !== 0 ? (
+              {areReviewsLoading ? (
+                <Typography variant="h4">Loading...</Typography>
+              ) : reviews?.results?.length !== 0 ? (
                 <ReviewCard review={reviews?.results[0]!} />
               ) : (
                 <Typography>There is no review for this movie yet.</Typography>
@@ -133,11 +239,15 @@ const MovieDetailsPage = () => {
           </Box>
 
           <Box className={classes.containerPadding}>
-            <Typography variant="h4">Recommandations</Typography>
+            <Typography variant="h4">Recommendations</Typography>
             <Box className={classes.subContainer}>
-              {recommandations?.results.map((reco) => (
-                <Recommandations movie={reco} />
-              ))}
+              {areRecommendationsLoading ? (
+                <Typography variant="h4">Loading...</Typography>
+              ) : (
+                recommendations?.results.map((reco) => (
+                  <Recommendations movie={reco} />
+                ))
+              )}
             </Box>
           </Box>
         </Box>

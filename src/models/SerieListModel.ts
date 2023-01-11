@@ -1,4 +1,4 @@
-interface SerieModel {
+interface SerieListModel {
   backdrop_path: string;
   first_air_date: string;
   genre_ids: number[];
@@ -14,4 +14,4 @@ interface SerieModel {
   vote_count: number;
 }
 
-export default SerieModel;
+export default SerieListModel;

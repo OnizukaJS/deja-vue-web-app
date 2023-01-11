@@ -1,4 +1,5 @@
 const routes = {
+  castDetails: (castId: string): string => `/cast/${castId}`,
   homePage: "/",
   movieDetails: (movieId: string): string => `/movie/${movieId}`,
   serieDetails: (serieId: string): string => `/serie/${serieId}`,

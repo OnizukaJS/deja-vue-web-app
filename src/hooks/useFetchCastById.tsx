@@ -1,21 +1,23 @@
-import { useEffect, useState } from "react";
-import SerieDetailsModel from "../models/SerieDetailsModel";
+import React, { useState, useEffect } from "react";
+import CastDetailsModel from "../models/CastDetailsModel";
 
-const useFetchSerieDetails = (
-  serieId: string
+const useFetchCastById = (
+  castId: string
 ): {
   isLoading: boolean;
-  serie: SerieDetailsModel | undefined;
+  cast: CastDetailsModel | undefined;
 } => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [serie, setSerie] = useState<SerieDetailsModel | undefined>();
+  const [cast, setCast] = useState<CastDetailsModel>();
 
   useEffect(() => {
-    async function fetchSerieDetails() {
+    setIsLoading(true);
+
+    async function fetchCastDetails() {
       try {
-        setIsLoading(true);
         await fetch(
-          `https://api.themoviedb.org/3/tv/${serieId}?api_key=${
+          `
+                https://api.themoviedb.org/3/person/${castId}?api_key=${
             import.meta.env.VITE_TMDB_API_KEY
           }&language=en-US`,
           {
@@ -27,17 +29,17 @@ const useFetchSerieDetails = (
           }
         )
           .then((response) => response.json())
-          .then((serie) => setSerie(serie as SerieDetailsModel))
+          .then((cast) => setCast(cast as CastDetailsModel))
           .then(() => setIsLoading(false));
       } catch (error) {
         setIsLoading(false);
       }
     }
 
-    fetchSerieDetails();
-  }, [serieId]);
+    fetchCastDetails();
+  }, [castId]);
 
-  return { isLoading, serie };
+  return { isLoading, cast };
 };
 
-export default useFetchSerieDetails;
+export default useFetchCastById;
