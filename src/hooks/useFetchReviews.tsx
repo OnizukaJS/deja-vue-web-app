@@ -2,8 +2,9 @@ import React from "react";
 import { useEffect, useState } from "react";
 import ReviewsListModel from "../models/ReviewsListModel";
 
-const useFetchMovieReviews = (
-  movieId: string
+const useFetchReviews = (
+  type: "movie" | "tv",
+  id: string
 ): {
   areReviewsLoading: boolean;
   reviews: ReviewsListModel | undefined;
@@ -12,12 +13,12 @@ const useFetchMovieReviews = (
   const [reviews, setReviews] = useState<ReviewsListModel | undefined>();
 
   useEffect(() => {
-    async function fetchMovieReviews() {
+    async function fetchReviews() {
       try {
         setAreReviewsLoading(true);
 
         await fetch(
-          `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${
+          `https://api.themoviedb.org/3/${type}/${id}/reviews?api_key=${
             import.meta.env.VITE_TMDB_API_KEY
           }&language=en-US&page=1`,
           {
@@ -36,10 +37,10 @@ const useFetchMovieReviews = (
       }
     }
 
-    fetchMovieReviews();
-  }, [movieId]);
+    fetchReviews();
+  }, [id]);
 
   return { areReviewsLoading, reviews };
 };
 
-export default useFetchMovieReviews;
+export default useFetchReviews;

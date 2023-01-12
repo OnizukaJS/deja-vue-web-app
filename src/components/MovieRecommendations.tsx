@@ -15,7 +15,7 @@ import routes from "../constants/routes";
 
 const useStyles = makeStyles(() =>
   createStyles({
-    containerRecommendation: {
+    containerMovieRecommendation: {
       minHeight: 141,
       minWidth: 250,
       margin: "6px",
@@ -27,16 +27,16 @@ const useStyles = makeStyles(() =>
   })
 );
 
-interface RecommendationsProps {
+interface MovieRecommendationsProps {
   movie: MovieRecommendationModel;
 }
 
-const Recommendations = ({ movie }: RecommendationsProps) => {
+const MovieRecommendations = ({ movie }: MovieRecommendationsProps) => {
   const classes = useStyles();
   const navigate = useNavigate();
 
   return (
-    <Card className={classes.containerRecommendation}>
+    <Card className={classes.containerMovieRecommendation}>
       <CardActionArea
         onClick={() => navigate(routes.movieDetails(movie.id.toString()))}
         sx={{ height: "100%" }}
@@ -59,4 +59,4 @@ const Recommendations = ({ movie }: RecommendationsProps) => {
   );
 };
 
-export default Recommendations;
+export default MovieRecommendations;

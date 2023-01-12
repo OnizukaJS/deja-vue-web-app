@@ -4,10 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import useFetchMovieDetails from "../hooks/useFetchMovieDetails";
 import { createStyles, makeStyles } from "@mui/styles";
 import RateBadge from "../components/RateBadge";
-import Recommendations from "../components/Recommendations";
+import MovieRecommendations from "../components/MovieRecommendations";
 import useFetchMovieRecommendations from "../hooks/useFetchMovieRecommendations";
 import useFetchCreditsById from "../hooks/useFetchCreditsById";
-import useFetchMovieReviews from "../hooks/useFetchMovieReviews";
+import useFetchReviews from "../hooks/useFetchReviews";
 import CastCard from "../components/CastCard";
 import ReviewCard from "../components/ReviewCard";
 import IconButton from "@mui/material/IconButton";
@@ -94,7 +94,7 @@ const MovieDetailsPage = () => {
   const { recommendations, areRecommendationsLoading } =
     useFetchMovieRecommendations(movieId!);
   const { credits, areCreditsLoading } = useFetchCreditsById("movie", movieId!);
-  const { reviews, areReviewsLoading } = useFetchMovieReviews(movieId!);
+  const { reviews, areReviewsLoading } = useFetchReviews("movie", movieId!);
   const { videos } = useFetchVideosByMovieOrSerieId("movie", movieId!);
   const trailer = videos?.results?.filter((video) => video.type === "Trailer");
   const trailerId = trailer ? trailer[0].key : "";
@@ -219,9 +219,11 @@ const MovieDetailsPage = () => {
           <Box className={classes.containerPadding}>
             <Typography variant="h4">Top Billed Cast</Typography>
             <Box className={classes.subContainer}>
-              {credits?.cast.map((actor) => (
-                <CastCard cast={actor} />
-              ))}
+              {areCreditsLoading ? (
+                <Typography variant="h4">Loading...</Typography>
+              ) : (
+                credits?.cast.map((actor) => <CastCard cast={actor} />)
+              )}
             </Box>
           </Box>
 
@@ -245,7 +247,7 @@ const MovieDetailsPage = () => {
                 <Typography variant="h4">Loading...</Typography>
               ) : (
                 recommendations?.results.map((reco) => (
-                  <Recommendations movie={reco} />
+                  <MovieRecommendations movie={reco} />
                 ))
               )}
             </Box>

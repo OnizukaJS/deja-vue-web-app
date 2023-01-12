@@ -4,12 +4,14 @@ import { useParams } from "react-router-dom";
 import useFetchSerieDetails from "../hooks/useFetchSerieDetails";
 import { createStyles, makeStyles } from "@mui/styles";
 import RateBadge from "../components/RateBadge";
-import Recommendations from "../components/Recommendations";
+import Recommendations from "../components/MovieRecommendations";
 import useFetchSerieRecommendations from "../hooks/useFetchSerieRecommendations";
 import useFetchCreditsById from "../hooks/useFetchCreditsById";
 // import useFetchSerieReviews from "../hooks/useFetchSerieReviews";
 import CastCard from "../components/CastCard";
 import ReviewCard from "../components/ReviewCard";
+import useFetchReviews from "../hooks/useFetchReviews";
+import SerieRecommendations from "../components/SerieRecommendations";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -64,7 +66,7 @@ const SerieDetailsPage = () => {
   const { recommendations, areRecommendationsLoading } =
     useFetchSerieRecommendations(serieId!);
   const { credits, areCreditsLoading } = useFetchCreditsById("tv", serieId!);
-  // const { reviews, areReviewsLoading } = useFetchMovieReviews(serieId!);
+  const { reviews, areReviewsLoading } = useFetchReviews("tv", serieId!);
 
   return (
     <Box className={classes.containerSerieDetails}>
@@ -112,20 +114,38 @@ const SerieDetailsPage = () => {
           <Box className={classes.containerPadding}>
             <Typography variant="h4">Top Billed Cast</Typography>
             <Box className={classes.subContainer}>
-              {credits?.cast.map((actor) => (
-                <CastCard cast={actor} />
-              ))}
+              {areCreditsLoading ? (
+                <Typography variant="h4">Reviews</Typography>
+              ) : (
+                credits?.cast.map((actor) => <CastCard cast={actor} />)
+              )}
             </Box>
           </Box>
 
           <Box className={classes.containerPadding}>
             <Typography variant="h4">Reviews</Typography>
-            <Box className={classes.subContainer}></Box>
+            <Box className={classes.subContainer}>
+              {areReviewsLoading ? (
+                <Typography variant="h4">Loading...</Typography>
+              ) : reviews?.results?.length !== 0 ? (
+                <ReviewCard review={reviews?.results[0]!} />
+              ) : (
+                <Typography>There is no review for this movie yet.</Typography>
+              )}
+            </Box>
           </Box>
 
           <Box className={classes.containerPadding}>
             <Typography variant="h4">Recommendations</Typography>
-            <Box className={classes.subContainer}></Box>
+            <Box className={classes.subContainer}>
+              {areRecommendationsLoading ? (
+                <Typography variant="h4">Loading...</Typography>
+              ) : (
+                recommendations?.results.map((reco) => (
+                  <SerieRecommendations serie={reco} />
+                ))
+              )}
+            </Box>
           </Box>
         </Box>
       )}
