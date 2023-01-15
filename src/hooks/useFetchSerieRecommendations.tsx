@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import SerieRecommendationsModel from "../models/SerieRecommendationsModel";
+import SerieRecommendationsListModel from "../models/SerieRecommendationsListModel";
 
 const useFetchSerieRecommendations = (
   serieId: string
 ): {
   areRecommendationsLoading: boolean;
-  recommendations: SerieRecommendationsModel | undefined;
+  recommendations: SerieRecommendationsListModel | undefined;
 } => {
   const [areRecommendationsLoading, setAreRecommendationsLoading] =
     useState<boolean>(false);
   const [recommendations, setRecommendations] = useState<
-    SerieRecommendationsModel | undefined
+    SerieRecommendationsListModel | undefined
   >();
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const useFetchSerieRecommendations = (
         )
           .then((response) => response.json())
           .then((recommendations) =>
-            setRecommendations(recommendations as SerieRecommendationsModel)
+            setRecommendations(recommendations as SerieRecommendationsListModel)
           )
           .then(() => setAreRecommendationsLoading(false));
       } catch (error) {

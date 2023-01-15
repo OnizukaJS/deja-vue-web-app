@@ -1,8 +1,8 @@
 import BaseModel from "./BaseModel";
 import SerieRecommendationModel from "./SerieRecommendationModel";
 
-interface SerieRecommendationsModel extends BaseModel {
+interface SerieRecommendationsListModel extends BaseModel {
   results: SerieRecommendationModel[];
 }
 
-export default SerieRecommendationsModel;
+export default SerieRecommendationsListModel;

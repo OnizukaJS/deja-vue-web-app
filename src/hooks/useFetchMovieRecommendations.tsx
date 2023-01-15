@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import MovieRecommendationsModel from "../models/MovieRecommendationsModel";
+import MovieRecommendationsListModel from "../models/MovieRecommendationsListModel";
 
 const useFetchMovieRecommendations = (
   movieId: string
 ): {
   areRecommendationsLoading: boolean;
-  recommendations: MovieRecommendationsModel | undefined;
+  recommendations: MovieRecommendationsListModel | undefined;
 } => {
   const [areRecommendationsLoading, setAreRecommendationsLoading] =
     useState<boolean>(false);
   const [recommendations, setRecommendations] = useState<
-    MovieRecommendationsModel | undefined
+    MovieRecommendationsListModel | undefined
   >();
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const useFetchMovieRecommendations = (
         )
           .then((response) => response.json())
           .then((recommendations) =>
-            setRecommendations(recommendations as MovieRecommendationsModel)
+            setRecommendations(recommendations as MovieRecommendationsListModel)
           )
           .then(() => setAreRecommendationsLoading(false));
       } catch (error) {
