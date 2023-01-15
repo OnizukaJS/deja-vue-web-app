@@ -4,6 +4,7 @@ import ReviewModel from "../models/ReviewModel";
 import Typography from "@mui/material/Typography";
 import { createStyles, makeStyles } from "@mui/styles";
 import RateBadgeReview from "./RateBadgeReview";
+import noProfilePicture from "../images/no-profile-picture.png";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -26,12 +27,15 @@ interface ReviewCardProps {
 
 const ReviewCard = ({ review }: ReviewCardProps) => {
   const classes = useStyles();
+  const image = review?.author_details.avatar_path
+    ? `https://www.themoviedb.org/t/p/original${review?.author_details.avatar_path}`
+    : noProfilePicture;
 
   return (
     <Card className={classes.containerReview}>
       <CardMedia
         component="img"
-        image={`https://www.themoviedb.org/t/p/original${review?.author_details.avatar_path}`}
+        image={image}
         alt={review?.author}
         className={classes.image}
         sx={{ width: 75 }}
