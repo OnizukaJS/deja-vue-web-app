@@ -23,7 +23,7 @@ const useFetchMovieDetails = (
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${import.meta.env.TMDB_ACCESS_TOKEN}`,
+              Authorization: `${import.meta.env.VITE_TMDB_ACCESS_TOKEN}`,
             },
           }
         )
