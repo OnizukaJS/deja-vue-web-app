@@ -2,12 +2,9 @@ import React from "react";
 
 import { createStyles, makeStyles } from "@mui/styles";
 import { Box, Typography } from "@mui/material";
-import useFetchPopularMovies from "../hooks/useFetchPopularMovies";
-import useFetchPopularSeries from "../hooks/useFetchPopularSeries";
-import useFetchTopRatedMovies from "../hooks/useFetchTopRatedMovies";
-import useFetchTopRatedSeries from "../hooks/useFetchTopRatedSeries";
 import WhatIsPopular from "../components/WhatIsPopular";
 import WhatIsTopRated from "../components/WhatIsTopRated";
+import UpcomingMovies from "../components/UpcomingMovies";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -22,8 +19,6 @@ const useStyles = makeStyles((theme) =>
 
 const HomePage = () => {
   const classes = useStyles();
-  const { topRatedMovies, isTopRatedMoviesLoading } = useFetchTopRatedMovies();
-  const { topRatedSeries, isTopRatedSeriesLoading } = useFetchTopRatedSeries();
 
   return (
     <Box>
@@ -37,6 +32,10 @@ const HomePage = () => {
       <Box className={classes.containerSections}>
         <Typography variant="h3">What's top rated</Typography>
         <WhatIsTopRated />
+      </Box>
+      <Box className={classes.containerSections}>
+        <Typography variant="h3">Upcoming movies</Typography>
+        <UpcomingMovies />
       </Box>
     </Box>
   );
