@@ -1,5 +1,11 @@
 import React from "react";
-import { Card, CardMedia, CardContent, CardActionArea } from "@mui/material";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  CardActionArea,
+  Box,
+} from "@mui/material";
 import CastModel from "../models/CastModel";
 import Typography from "@mui/material/Typography";
 import { createStyles, makeStyles } from "@mui/styles";
@@ -33,21 +39,24 @@ const CastCard = ({ cast }: CastCardProps) => {
     <Card className={classes.containerCast}>
       <CardActionArea
         onClick={() => navigate(routes.castDetails(cast.id.toString()))}
+        sx={{ height: "100%" }}
       >
-        <CardMedia
-          component="img"
-          image={
-            cast?.profile_path !== null
-              ? `https://www.themoviedb.org/t/p/original${cast?.profile_path}`
-              : noProfilePicture
-          }
-          alt={cast?.name}
-          className={classes.image}
-        />
-        <CardContent>
-          <Typography sx={{ fontWeight: "bold" }}>{cast?.name}</Typography>
-          <Typography variant="caption">{cast?.character}</Typography>
-        </CardContent>
+        <Box sx={{ height: "100%" }}>
+          <CardMedia
+            component="img"
+            image={
+              cast?.profile_path !== null
+                ? `https://www.themoviedb.org/t/p/original${cast?.profile_path}`
+                : noProfilePicture
+            }
+            alt={cast?.name}
+            className={classes.image}
+          />
+          <CardContent>
+            <Typography sx={{ fontWeight: "bold" }}>{cast?.name}</Typography>
+            <Typography variant="caption">{cast?.character}</Typography>
+          </CardContent>
+        </Box>
       </CardActionArea>
     </Card>
   );

@@ -28,7 +28,7 @@ const useStyles = makeStyles(() =>
     },
     image: {
       borderRadius: 4,
-      minHeight: 200,
+      minHeight: 225,
     },
   })
 );
