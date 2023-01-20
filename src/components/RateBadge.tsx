@@ -81,7 +81,7 @@ const RateBadge = ({ rate }: RateBadgeProps) => {
       <Box className={classes.outerRing}>
         <Box className={classes.userRate}>
           <Box className={classes.percent}>
-            <span className={classes.icon}>{percentage} %</span>
+            <span className={classes.icon}>{percentage.toFixed(0)} %</span>
             <CircularProgress
               variant="determinate"
               value={percentage}
