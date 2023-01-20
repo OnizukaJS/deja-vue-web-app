@@ -9,6 +9,9 @@ import PopularSeriesPage from "./PopularSeriesPage";
 import SerieDetailsPage from "./SerieDetailsPage";
 import TopRatedMoviesPage from "./TopRatedMoviesPage";
 import TopRatedSeriesPage from "./TopRatedSeriesPage";
+import SearchMoviesPage from "./SearchMoviesPage";
+import SearchSeriesPage from "./SearchSeriesPage";
+import SearchPersonsPage from "./SearchPersonsPage";
 
 const Content = () => {
   return (
@@ -29,6 +32,18 @@ const Content = () => {
         />
         <Route path={routes.popularMovies} element={<PopularMoviesPage />} />
         <Route path={routes.popularSeries} element={<PopularSeriesPage />} />
+        <Route
+          path={routes.searchMoviesPage(":query")}
+          element={<SearchMoviesPage />}
+        />
+        <Route
+          path={routes.searchPersonsPage(":query")}
+          element={<SearchPersonsPage />}
+        />
+        <Route
+          path={routes.searchSeriesPage(":query")}
+          element={<SearchSeriesPage />}
+        />
         <Route path={routes.topRatedMovies} element={<TopRatedMoviesPage />} />
         <Route path={routes.topRatedSeries} element={<TopRatedSeriesPage />} />
       </Routes>

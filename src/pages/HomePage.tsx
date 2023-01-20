@@ -5,14 +5,20 @@ import { Box, Typography } from "@mui/material";
 import WhatIsPopular from "../components/WhatIsPopular";
 import WhatIsTopRated from "../components/WhatIsTopRated";
 import UpcomingMovies from "../components/UpcomingMovies";
+import wallpaper from "../images/home-page-wallpaper.jpg";
+import InputSearchComponent from "../components/InputSearchComponent";
 
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     containerSections: {
       padding: 24,
     },
     containerWelcomeSection: {
-      // backgroundImage: `url(${wallpaper})`,
+      height: "120vh",
+      backgroundImage: `url(${wallpaper})`,
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
     },
   })
 );
@@ -23,7 +29,7 @@ const HomePage = () => {
   return (
     <Box>
       <Box className={classes.containerWelcomeSection}>
-        <Typography variant="h3">Home Page</Typography>
+        <InputSearchComponent />
       </Box>
       <Box className={classes.containerSections}>
         <Typography variant="h3">What's popular</Typography>
