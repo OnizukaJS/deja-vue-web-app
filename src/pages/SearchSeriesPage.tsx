@@ -1,14 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Box, Typography } from "@mui/material";
 import MenuSearchPage from "../components/MenuSearchPage";
 import useFetchSeriesSearch from "../hooks/useFetchSeriesSearch";
-import { SearchContextData } from "../context/SearchContextProvider";
 import SerieSearch from "../components/SerieSearch";
+import { useParams } from "react-router-dom";
 
 const SearchSeriesPage = () => {
-  const useSearchContextData = () => useContext(SearchContextData);
-  const query = useSearchContextData();
-  const { series, isLoading } = useFetchSeriesSearch(query);
+  const { query } = useParams();
+  const { series, isLoading } = useFetchSeriesSearch(query!);
 
   return (
     <Box sx={{ display: "flex", padding: 3 }}>
@@ -18,7 +17,9 @@ const SearchSeriesPage = () => {
         {isLoading ? (
           <Typography>Loading...</Typography>
         ) : (
-          series?.results.map((serie) => <SerieSearch serie={serie} />)
+          series?.results.map((serie, key) => (
+            <SerieSearch serie={serie} key={key} />
+          ))
         )}
       </Box>
     </Box>

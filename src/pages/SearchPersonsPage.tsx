@@ -1,16 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Box, Typography } from "@mui/material";
 import MenuSearchPage from "../components/MenuSearchPage";
 import useFetchPersonsSearch from "../hooks/useFetchPersonsSearch";
-import { SearchContextData } from "../context/SearchContextProvider";
 import PersonSearch from "../components/PersonSearch";
+import { useParams } from "react-router-dom";
 
 const SearchPersonsPage = () => {
-  const useSearchContextData = () => useContext(SearchContextData);
-  const query = useSearchContextData();
-  const { persons, isLoading } = useFetchPersonsSearch(query);
-
-  console.log(persons);
+  const { query } = useParams();
+  const { persons, isLoading } = useFetchPersonsSearch(query!);
 
   return (
     <Box sx={{ display: "flex", padding: 3 }}>
@@ -20,7 +17,9 @@ const SearchPersonsPage = () => {
         {isLoading ? (
           <Typography>Loading...</Typography>
         ) : (
-          persons?.results.map((person) => <PersonSearch person={person} />)
+          persons?.results.map((person, key) => (
+            <PersonSearch person={person} key={key} />
+          ))
         )}
       </Box>
     </Box>

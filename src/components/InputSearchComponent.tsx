@@ -38,14 +38,14 @@ const InputSearchComponent = () => {
   const useSearchContextAPI = () => useContext(SearchContextAPI);
   const searchContextAPI = useSearchContextAPI();
   const useSearchContextData = () => useContext(SearchContextData);
-  const searchContextData = useSearchContextData();
+  const query = useSearchContextData();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     searchContextAPI(e.target.value);
   };
 
   const handleClick = () => {
-    navigate(routes.searchMoviesPage(searchContextData));
+    navigate(routes.searchMoviesPage(query));
   };
 
   return (

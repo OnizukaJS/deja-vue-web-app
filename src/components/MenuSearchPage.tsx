@@ -8,9 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import routes from "../constants/routes";
-import { SearchContextData } from "../context/SearchContextProvider";
 import useFetchMoviesSearch from "../hooks/useFetchMoviesSearch";
 import useFetchSeriesSearch from "../hooks/useFetchSeriesSearch";
 import useFetchPersonsSearch from "../hooks/useFetchPersonsSearch";
@@ -42,19 +41,18 @@ const useStyles = makeStyles(() =>
 const MenuSearchPage = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const useSearchContextData = () => useContext(SearchContextData);
-  const query = useSearchContextData();
-  const { movies } = useFetchMoviesSearch(query);
-  const { series } = useFetchSeriesSearch(query);
-  const { persons } = useFetchPersonsSearch(query);
+  const { query } = useParams();
+  const { movies } = useFetchMoviesSearch(query!);
+  const { series } = useFetchSeriesSearch(query!);
+  const { persons } = useFetchPersonsSearch(query!);
 
   const handleNavigate = (search: "movies" | "series" | "persons") => {
     if (search === "movies") {
-      navigate(routes.searchMoviesPage(query));
+      navigate(routes.searchMoviesPage(query!));
     } else if (search === "series") {
-      navigate(routes.searchSeriesPage(query));
+      navigate(routes.searchSeriesPage(query!));
     } else {
-      navigate(routes.searchPersonsPage(query));
+      navigate(routes.searchPersonsPage(query!));
     }
   };
 
