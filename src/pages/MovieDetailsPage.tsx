@@ -245,10 +245,14 @@ const MovieDetailsPage = () => {
             <Box className={classes.subContainer}>
               {areRecommendationsLoading ? (
                 <Typography variant="h4">Loading...</Typography>
-              ) : (
+              ) : recommendations?.results.length !== 0 ? (
                 recommendations?.results.map((reco) => (
                   <MovieRecommendations movie={reco} />
                 ))
+              ) : (
+                <Typography>
+                  There is no recommendations for this movie yet.
+                </Typography>
               )}
             </Box>
           </Box>

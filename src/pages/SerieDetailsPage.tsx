@@ -130,7 +130,7 @@ const SerieDetailsPage = () => {
               ) : reviews?.results?.length !== 0 ? (
                 <ReviewCard review={reviews?.results[0]!} />
               ) : (
-                <Typography>There is no review for this movie yet.</Typography>
+                <Typography>There is no review for this serie yet.</Typography>
               )}
             </Box>
           </Box>
@@ -140,10 +140,14 @@ const SerieDetailsPage = () => {
             <Box className={classes.subContainer}>
               {areRecommendationsLoading ? (
                 <Typography variant="h4">Loading...</Typography>
-              ) : (
+              ) : recommendations?.results.length !== 0 ? (
                 recommendations?.results.map((reco) => (
                   <SerieRecommendations serie={reco} />
                 ))
+              ) : (
+                <Typography>
+                  There is no recommendations for this serie yet.
+                </Typography>
               )}
             </Box>
           </Box>
