@@ -5,11 +5,9 @@ const useFetchPersonsSearch = (
   query: string
 ): {
   isLoading: boolean;
-  persons: PersonsListModel;
+  persons: PersonsListModel | undefined;
 } => {
-  const [persons, setPersons] = useState<PersonsListModel>(
-    {} as PersonsListModel
-  );
+  const [persons, setPersons] = useState<PersonsListModel | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {

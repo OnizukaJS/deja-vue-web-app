@@ -5,9 +5,9 @@ const useFetchSeriesSearch = (
   query: string
 ): {
   isLoading: boolean;
-  series: SeriesListModel;
+  series: SeriesListModel | undefined;
 } => {
-  const [series, setSeries] = useState<SeriesListModel>({} as SeriesListModel);
+  const [series, setSeries] = useState<SeriesListModel | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
