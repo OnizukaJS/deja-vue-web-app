@@ -5,9 +5,9 @@ const useFetchMoviesSearch = (
   query: string
 ): {
   isLoading: boolean;
-  movies: MoviesListModel;
+  movies: MoviesListModel | undefined;
 } => {
-  const [movies, setMovies] = useState<MoviesListModel>({} as MoviesListModel);
+  const [movies, setMovies] = useState<MoviesListModel | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {

@@ -14,6 +14,9 @@ import { SearchContextData } from "../context/SearchContextProvider";
 
 const useStyles = makeStyles(() =>
   createStyles({
+    containerMenu: {
+      marginRight: 24,
+    },
     resultsNumber: {
       backgroundColor: "rgba(0,0,0,0.08)",
       padding: "2px 12px",
@@ -22,6 +25,8 @@ const useStyles = makeStyles(() =>
     title: {
       backgroundColor: "#01b4e4",
       color: "#fff",
+      borderTopLeftRadius: 4,
+      borderTopRightRadius: 4,
     },
   })
 );
@@ -43,7 +48,7 @@ const MenuSearchPage = () => {
   };
 
   return (
-    <Box>
+    <Box className={classes.containerMenu}>
       <MenuList>
         <ListItem className={classes.title}>
           <Typography sx={{ fontWeight: "bold" }}>Search results</Typography>
