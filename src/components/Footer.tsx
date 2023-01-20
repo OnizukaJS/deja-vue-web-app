@@ -21,7 +21,11 @@ const Footer = () => {
 
   return (
     <footer className={classes.containerHeader}>
-      <img src={tmdbLogo} alt="TMDB_Logo" style={{ width: 100 }} />
+      <img
+        src={tmdbLogo}
+        alt="TMDB_Logo"
+        style={{ width: 100, marginLeft: 16 }}
+      />
     </footer>
   );
 };
