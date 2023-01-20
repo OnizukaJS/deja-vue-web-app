@@ -11,11 +11,19 @@ import { createStyles, makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
 import routes from "../constants/routes";
 import { SearchContextData } from "../context/SearchContextProvider";
+import useFetchMoviesSearch from "../hooks/useFetchMoviesSearch";
+import useFetchSeriesSearch from "../hooks/useFetchSeriesSearch";
+import useFetchPersonsSearch from "../hooks/useFetchPersonsSearch";
 
 const useStyles = makeStyles(() =>
   createStyles({
     containerMenu: {
       marginRight: 24,
+      minWidth: 250,
+    },
+    containerMenuList: {
+      border: "1px solid gainsboro",
+      borderRadius: 4,
     },
     resultsNumber: {
       backgroundColor: "rgba(0,0,0,0.08)",
@@ -36,6 +44,9 @@ const MenuSearchPage = () => {
   const navigate = useNavigate();
   const useSearchContextData = () => useContext(SearchContextData);
   const query = useSearchContextData();
+  const { movies } = useFetchMoviesSearch(query);
+  const { series } = useFetchSeriesSearch(query);
+  const { persons } = useFetchPersonsSearch(query);
 
   const handleNavigate = (search: "movies" | "series" | "persons") => {
     if (search === "movies") {
@@ -49,26 +60,38 @@ const MenuSearchPage = () => {
 
   return (
     <Box className={classes.containerMenu}>
-      <MenuList>
+      <MenuList
+        className={classes.containerMenuList}
+        sx={{ paddingTop: 0, paddingBottom: 0 }}
+      >
         <ListItem className={classes.title}>
           <Typography sx={{ fontWeight: "bold" }}>Search results</Typography>
         </ListItem>
-        <MenuItem onClick={() => handleNavigate("movies")}>
+        <MenuItem
+          onClick={() => handleNavigate("movies")}
+          selected={window.location.href.includes("movie")}
+        >
           <ListItemText>Movies</ListItemText>
           <Typography variant="body2" className={classes.resultsNumber}>
-            823
+            {movies?.total_results}
           </Typography>
         </MenuItem>
-        <MenuItem onClick={() => handleNavigate("series")}>
+        <MenuItem
+          onClick={() => handleNavigate("series")}
+          selected={window.location.href.includes("serie")}
+        >
           <ListItemText>Series</ListItemText>
           <Typography variant="body2" className={classes.resultsNumber}>
-            2314
+            {series?.total_results}
           </Typography>
         </MenuItem>
-        <MenuItem onClick={() => handleNavigate("persons")}>
+        <MenuItem
+          onClick={() => handleNavigate("persons")}
+          selected={window.location.href.includes("person")}
+        >
           <ListItemText>Persons</ListItemText>
           <Typography variant="body2" className={classes.resultsNumber}>
-            378
+            {persons?.total_results}
           </Typography>
         </MenuItem>
       </MenuList>

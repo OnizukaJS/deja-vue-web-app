@@ -14,7 +14,7 @@ const SearchMoviesPage = () => {
     <Box sx={{ display: "flex", padding: 3 }}>
       <MenuSearchPage />
 
-      <Box>
+      <Box sx={{ width: "100%" }}>
         {isLoading ? (
           <Typography>Loading...</Typography>
         ) : (
