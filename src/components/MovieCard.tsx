@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import routes from "../constants/routes";
 import { createStyles, makeStyles } from "@mui/styles";
 import RateBadge from "./RateBadge";
+import noMovieCardPicture from "../images/no-picture-available.png";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -41,6 +42,11 @@ const MovieCard = ({ movie }: MovieCardProps) => {
   const classes = useStyles();
   const navigate = useNavigate();
 
+  const image =
+    movie.poster_path !== null
+      ? `https://www.themoviedb.org/t/p/original${movie.poster_path}`
+      : noMovieCardPicture;
+
   return (
     <Card className={classes.containerCard}>
       <CardActionArea
@@ -51,7 +57,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
           <Box sx={{ minHeight: 200 }}>
             <CardMedia
               component="img"
-              image={`https://www.themoviedb.org/t/p/original${movie.poster_path}`}
+              image={image}
               alt={movie.title}
               className={classes.image}
             />

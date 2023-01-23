@@ -12,6 +12,7 @@ import { createStyles, makeStyles } from "@mui/styles";
 import noProfilePicture from "../images/no-profile-picture.png";
 import { useNavigate } from "react-router-dom";
 import routes from "../constants/routes";
+import noCastCardPicture from "../images/no-picture-available.png";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -35,6 +36,11 @@ const CastCard = ({ cast }: CastCardProps) => {
   const classes = useStyles();
   const navigate = useNavigate();
 
+  const image =
+    cast.profile_path !== null
+      ? `https://www.themoviedb.org/t/p/original${cast?.profile_path}`
+      : noCastCardPicture;
+
   return (
     <Card className={classes.containerCast}>
       <CardActionArea
@@ -44,11 +50,7 @@ const CastCard = ({ cast }: CastCardProps) => {
         <Box sx={{ height: "100%" }}>
           <CardMedia
             component="img"
-            image={
-              cast?.profile_path !== null
-                ? `https://www.themoviedb.org/t/p/original${cast?.profile_path}`
-                : noProfilePicture
-            }
+            image={image}
             alt={cast?.name}
             className={classes.image}
           />

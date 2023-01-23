@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardMedia, CardContent } from "@mui/material";
+import { Card, CardMedia, CardContent, Box } from "@mui/material";
 import ReviewModel from "../models/ReviewModel";
 import Typography from "@mui/material/Typography";
 import { createStyles, makeStyles } from "@mui/styles";
@@ -27,19 +27,22 @@ interface ReviewCardProps {
 
 const ReviewCard = ({ review }: ReviewCardProps) => {
   const classes = useStyles();
-  const image = review?.author_details.avatar_path
-    ? `https://www.themoviedb.org/t/p/original${review?.author_details.avatar_path}`
-    : noProfilePicture;
+  const image =
+    review?.author_details.avatar_path !== null
+      ? review?.author_details.avatar_path
+      : noProfilePicture;
 
   return (
     <Card className={classes.containerReview}>
-      <CardMedia
-        component="img"
-        image={image}
-        alt={review?.author}
-        className={classes.image}
-        sx={{ width: 75 }}
-      />
+      <Box>
+        <CardMedia
+          component="img"
+          image={image}
+          alt={review?.author}
+          className={classes.image}
+          sx={{ width: 75 }}
+        />
+      </Box>
       <CardContent>
         <Typography sx={{ fontWeight: "bold", display: "flex" }}>
           A review by {review?.author}{" "}

@@ -12,6 +12,7 @@ import {
 import RateBadge from "./RateBadge";
 import { useNavigate } from "react-router-dom";
 import routes from "../constants/routes";
+import noRecommendationPicture from "../images/no-recommendation-picture.png";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -35,6 +36,11 @@ const MovieRecommendations = ({ movie }: MovieRecommendationsProps) => {
   const classes = useStyles();
   const navigate = useNavigate();
 
+  const image =
+    movie.backdrop_path !== null
+      ? `https://www.themoviedb.org/t/p/original${movie.backdrop_path}`
+      : noRecommendationPicture;
+
   return (
     <Card className={classes.containerMovieRecommendation}>
       <CardActionArea
@@ -44,7 +50,7 @@ const MovieRecommendations = ({ movie }: MovieRecommendationsProps) => {
         <Box sx={{ height: "100%" }}>
           <CardMedia
             component="img"
-            image={`https://www.themoviedb.org/t/p/original${movie.backdrop_path}`}
+            image={image}
             alt={movie.title}
             className={classes.image}
           />

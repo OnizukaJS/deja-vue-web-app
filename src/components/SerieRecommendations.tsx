@@ -12,6 +12,7 @@ import SerieRecommendationModel from "../models/SerieRecommendationModel";
 import { useNavigate } from "react-router-dom";
 import routes from "../constants/routes";
 import RateBadge from "./RateBadge";
+import noRecommendationPicture from "../images/no-recommendation-picture.png";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -35,6 +36,11 @@ const SerieRecommendations = ({ serie }: SerieRecommendationsProps) => {
   const classes = useStyles();
   const navigate = useNavigate();
 
+  const image =
+    serie.backdrop_path !== null
+      ? `https://www.themoviedb.org/t/p/original${serie.backdrop_path}`
+      : noRecommendationPicture;
+
   return (
     <Card className={classes.containerSerieRecommendation}>
       <CardActionArea
@@ -44,7 +50,7 @@ const SerieRecommendations = ({ serie }: SerieRecommendationsProps) => {
         <Box sx={{ height: "100%" }}>
           <CardMedia
             component="img"
-            image={`https://www.themoviedb.org/t/p/original${serie.backdrop_path}`}
+            image={image}
             alt={serie.name}
             className={classes.image}
           />
