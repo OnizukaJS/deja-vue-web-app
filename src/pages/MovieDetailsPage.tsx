@@ -87,7 +87,6 @@ const toHoursAndMinutes = (totalMinutes: number | undefined) => {
 
 const MovieDetailsPage = () => {
   const classes = useStyles();
-  const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
   const { movieId } = useParams();
   const { movie, isLoading } = useFetchMovieDetails(movieId!);
@@ -125,15 +124,22 @@ const MovieDetailsPage = () => {
               />
 
               <Box className={classes.information}>
-                <Typography variant="h4">{movie?.title}</Typography>
-
-                <Typography>
-                  {movie?.release_date} |{" "}
-                  {movie?.genres.map((genre) => `${genre.name}, `)} |{" "}
-                  {toHoursAndMinutes(movie?.runtime)}
+                <Typography variant="h4" sx={{ marginBottom: 2 }}>
+                  {movie?.title}
                 </Typography>
 
-                <Box sx={{ display: "flex" }}>
+                <Typography sx={{ marginBottom: 2 }}>
+                  {movie?.release_date} |{" "}
+                  {movie?.genres.map(
+                    (genre, key) =>
+                      `${genre.name}${
+                        key < movie?.genres.length - 1 ? ", " : ""
+                      }`
+                  )}{" "}
+                  | {toHoursAndMinutes(movie?.runtime)}
+                </Typography>
+
+                <Box sx={{ display: "flex", marginBottom: 2 }}>
                   <RateBadge rate={Number(movie?.vote_average?.toFixed(1))} />
 
                   <Box sx={{ marginLeft: 1 }}>
@@ -206,7 +212,10 @@ const MovieDetailsPage = () => {
                   </Box>
                 </Box>
 
-                <Typography variant="caption" sx={{ fontStyle: "italic" }}>
+                <Typography
+                  variant="caption"
+                  sx={{ fontStyle: "italic", marginBottom: 2 }}
+                >
                   {movie?.tagline}
                 </Typography>
 

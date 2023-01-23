@@ -1,17 +1,22 @@
-import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import { Box, Button, IconButton, Modal, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import useFetchSerieDetails from "../hooks/useFetchSerieDetails";
 import { createStyles, makeStyles } from "@mui/styles";
 import RateBadge from "../components/RateBadge";
-import Recommendations from "../components/MovieRecommendations";
 import useFetchSerieRecommendations from "../hooks/useFetchSerieRecommendations";
 import useFetchCreditsById from "../hooks/useFetchCreditsById";
-// import useFetchSerieReviews from "../hooks/useFetchSerieReviews";
 import CastCard from "../components/CastCard";
 import ReviewCard from "../components/ReviewCard";
 import useFetchReviews from "../hooks/useFetchReviews";
 import SerieRecommendations from "../components/SerieRecommendations";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import StarRateIcon from "@mui/icons-material/StarRate";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import CloseIcon from "@mui/icons-material/Close";
+import useFetchVideosByMovieOrSerieId from "../hooks/useFetchVideosByMovieOrSerieId";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -19,6 +24,12 @@ const useStyles = makeStyles(() =>
       backgroundSize: "cover",
       height: "40em",
       filter: "brightness(0.3)",
+    },
+    button: {
+      background: "#0d253f!important",
+      color: "#fff!important",
+      marginLeft: 2,
+      marginRight: 2,
     },
     containerMainInfo: {},
     containerInformation: {
@@ -31,6 +42,11 @@ const useStyles = makeStyles(() =>
     containerPadding: {
       padding: 24,
     },
+    iframe: {
+      width: "100%",
+      height: "100%",
+      borderWidth: 0,
+    },
     image: {
       height: 500,
       borderRadius: "8px",
@@ -41,6 +57,15 @@ const useStyles = makeStyles(() =>
       justifyContent: "center",
       color: "#fff",
       marginLeft: 24,
+    },
+    modal: {
+      top: "45%!important",
+      left: "50%!important",
+      transform: "translate(-50%, -50%)",
+      width: "80%",
+      height: "88%",
+      border: "2px solid #000",
+      boxShadow: "24px",
     },
     subContainer: {
       display: "flex",
@@ -61,12 +86,19 @@ const toHoursAndMinutes = (totalMinutes: number | undefined) => {
 
 const SerieDetailsPage = () => {
   const classes = useStyles();
+  const [open, setOpen] = useState<boolean>(false);
   const { serieId } = useParams();
   const { serie, isLoading } = useFetchSerieDetails(serieId!);
   const { recommendations, areRecommendationsLoading } =
     useFetchSerieRecommendations(serieId!);
   const { credits, areCreditsLoading } = useFetchCreditsById("tv", serieId!);
   const { reviews, areReviewsLoading } = useFetchReviews("tv", serieId!);
+  const { videos } = useFetchVideosByMovieOrSerieId("tv", serieId!);
+  const trailer = videos?.results?.filter((video) => video.type === "Trailer");
+  const trailerId = trailer ? trailer[0].key : "";
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <Box className={classes.containerSerieDetails}>
@@ -91,17 +123,98 @@ const SerieDetailsPage = () => {
               />
 
               <Box className={classes.information}>
-                <Typography variant="h4">{serie?.name}</Typography>
-
-                <Typography>
-                  {serie?.first_air_date} |{" "}
-                  {serie?.genres.map((genre) => `${genre.name}, `)} |{" "}
-                  {toHoursAndMinutes(serie?.episode_run_time[0])}
+                <Typography variant="h4" sx={{ marginBottom: 2 }}>
+                  {serie?.name}
                 </Typography>
 
-                <RateBadge rate={Number(serie?.vote_average?.toFixed(1))} />
+                <Typography sx={{ marginBottom: 2 }}>
+                  {serie?.first_air_date} |{" "}
+                  {serie?.genres.map(
+                    (genre, key) =>
+                      `${genre.name}${
+                        key < serie?.genres.length - 1 ? ", " : ""
+                      }`
+                  )}{" "}
+                  | {toHoursAndMinutes(serie?.episode_run_time[0])}
+                </Typography>
 
-                <Typography variant="caption" sx={{ fontStyle: "italic" }}>
+                <Box sx={{ display: "flex", marginBottom: 2 }}>
+                  <RateBadge rate={Number(serie?.vote_average?.toFixed(1))} />
+
+                  <Box sx={{ marginLeft: 1 }}>
+                    <IconButton
+                      aria-label="add-to-list"
+                      className={classes.button}
+                      sx={{ marginLeft: 1, marginRight: 1 }}
+                    >
+                      <FormatListBulletedIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      aria-label="add-to-favorites"
+                      className={classes.button}
+                      sx={{ marginLeft: 1, marginRight: 1 }}
+                    >
+                      <FavoriteIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      aria-label="add-to-watchlist"
+                      className={classes.button}
+                      sx={{ marginLeft: 1, marginRight: 1 }}
+                    >
+                      <BookmarkIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      aria-label="rate-it"
+                      className={classes.button}
+                      sx={{ marginLeft: 1, marginRight: 1 }}
+                    >
+                      <StarRateIcon fontSize="small" />
+                    </IconButton>
+
+                    <Button
+                      variant="text"
+                      startIcon={<PlayArrowIcon />}
+                      sx={{ color: "#fff", fontWeight: "bold" }}
+                      onClick={handleOpen}
+                    >
+                      Play Trailer
+                    </Button>
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      className={classes.modal}
+                    >
+                      <>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            background: "black",
+                            color: "#fff",
+                            padding: 2,
+                          }}
+                        >
+                          <Typography>Trailer {serie?.name}</Typography>
+                          <IconButton aria-label="close" onClick={handleClose}>
+                            <CloseIcon sx={{ color: "grey" }} />
+                          </IconButton>
+                        </Box>
+                        <iframe
+                          src={`https://www.youtube.com/embed/${trailerId}`}
+                          title={`${serie?.name}`}
+                          allowFullScreen
+                          className={classes.iframe}
+                        ></iframe>
+                      </>
+                    </Modal>
+                  </Box>
+                </Box>
+
+                <Typography
+                  variant="caption"
+                  sx={{ fontStyle: "italic", marginBottom: 2 }}
+                >
                   {serie?.tagline}
                 </Typography>
 
